@@ -1,0 +1,56 @@
+{% extends "/base.html" %}
+{% block titulo %}{% endblock %}
+
+
+
+{% block contenido %}
+<div class="container-fluid color pt-3 ">
+    <div class="row">
+        <div class="col-xl-4 col-lg-4 ">
+            <a class="btn btn-outline-light " href="/" aria-label="Settings">
+                <i class="fa fa-home" aria-hidden="true"></i>
+            </a>
+        </div>
+        <div class="col-xl-4 col-lg-4 ms-5 text-center">
+            <h4 class="titulo">TuBanD</h4>
+            <p class="font-weight-bold titulo_inicio">Descubre Nuevos artistas y bandas emergentes</p>
+        </div>
+        <div class="col-xl-4 col-lg-4 text-right ">
+            <a class="btn btn-danger signing " href='/logout'>Logout</a>
+        </div>
+    </div>
+    <div class="row d-flex justify-content-center">
+        <a class="btn btn-outline-light m-2" href="{{url_for('artista_logueado', id=data['id'])}}">Home</a>
+        <a class="btn btn-outline-light m-2" href="{{url_for('tour', id=data['id'])}}">Tour</a>
+        <a class="btn btn-outline-light m-2" href="">Discografia</a>
+    </div>
+</div>
+    <div class="container mt-3">
+        <div class="row text-center mt-3 d-block">
+            <h2>Tour</h2>
+            <hr>
+            <h5 >Santiago, Chile</h5>
+            <p >lollapalooza</p>
+            <h6 >16 Jun 2022</h6>
+        </div>
+        <hr>
+        <div class="row text-center mt-3 d-block">
+            <h5 >Coquimbo, Chile</h5>
+            <p >La pampilla</p>
+            <h6 >18 sep 2022</h6>
+        </div>
+        <hr>
+        <div class="row text-center mt-3 d-block">
+            <h5 >Ovalle, Chile</h5>
+            <p >Los Peñones</p>
+            <h6 >31 Dic 2022</h6>
+        </div>
+        <hr>
+        <div class="row text-center mt-3 d-block">
+            <h5 >El Trapiche, Chile</h5>
+            <p >Feria Costumbrista</p>
+            <h6 >09 Feb 2022</h6>
+        </div>
+        <hr>
+    </div>
+{% endblock %}

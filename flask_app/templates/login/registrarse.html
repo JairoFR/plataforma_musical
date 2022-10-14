@@ -1,0 +1,51 @@
+{% extends "/base.html" %}
+{% block titulo %}{% endblock %}
+
+
+
+{% block contenido %}
+<div class="container-fluid color pt-3">
+    <div class="row">
+        <div class="col-xl-4 col-lg-4">
+                <a class="btn btn-outline-light " href="/" aria-label="Settings">
+                    <i class="fa fa-home" aria-hidden="true"></i>
+                </a>
+        </div>
+        <div class="col-xl-4 col-lg-4 ms-5 text-center">
+            <h4 class="titulo">TuBanD</h4>
+            <p  class="font-weight-bold titulo_inicio">Descubre Nuevos artistas y bandas emergentes</p> 
+        </div>
+        <div class="col-xl-4 col-lg-4 ms-5"> 
+
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="col-md-12 col-xl-12 col-lg-12 d-flex justify-content-center">
+        <h3 class="titulo_registrese mt-3 mb-3 font-weight-bold"> Registrese para tener una cuenta en TuBanD</h3>
+    </div>
+    <div class="row">
+        <div class="col-6 mt-3">
+            <div class="col-sm-12 d-flex justify-content-center">
+                <img src="{{ url_for('static', filename='/img/walkman.jpg') }}" class="d-block w-80 img h-50 w-75 text-center" alt="...">
+            </div>
+            <div class="col-sm-12 text-center">
+                <a class="btn btn-outline-primary mt-3" href='/registrarse/fan'>Registrese como fans</a>
+            </div>
+        
+           
+        </div>
+        <div class="col-6 mt-3">
+            <div class="col-sm-12 d-flex justify-content-center h-75 mt-3">
+                <img src="{{ url_for('static', filename='/img/guitarra.webp') }}" class="d-block w-80  w-25 text-center" alt="...">
+            </div>
+            <div class="col-sm-12 mt-3 text-center mt-1">
+                <a class="btn btn-outline-success" href="/registrarse/artista">Registrese como Artista</a>
+            </div>
+        </div>
+    </div>
+    </div>
+
+
+
+{% endblock %}

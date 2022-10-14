@@ -1,0 +1,65 @@
+{% extends "/base.html" %}
+{% block titulo %}{% endblock %}
+
+
+
+{% block contenido %}
+<div class="container-fluid color pt-3 ">
+    <div class="row">
+        <div class="col-xl-4 col-lg-4 ">
+            <a class="btn btn-outline-light " href="/" aria-label="Settings">
+                <i class="fa fa-home" aria-hidden="true"></i>
+            </a>
+        </div>
+        <div class="col-xl-4 col-lg-4 ms-5 text-center">
+            <h4 class="titulo">TuBanD</h4>
+            <p class="font-weight-bold titulo_inicio">Descubre Nuevos artistas y bandas emergentes</p>
+        </div>
+        <div class="col-xl-4 col-lg-4 text-right ">
+            <a class="btn btn-danger signing " href='/logout'>Logout</a>
+        </div>
+    </div>
+    <div class="row d-flex justify-content-center">
+        <a class="btn btn-outline-light m-2" href="{{url_for('artista_logueado', id=data['id'])}}">Home</a>
+        <a class="btn btn-outline-light m-2" href="{{url_for('tour', id=data['id'])}}">Tour</a>
+        <a class="btn btn-outline-light m-2" href="">Discografia</a>
+    </div>
+</div>
+<div class="container">
+    <div class="d-flex justify-content-center">
+        <a class="btn btn-primary m-3" href="{{url_for('editar_cuenta_biografia', id=data['id'])}}">Biografia</a>
+        <a class="btn btn-primary m-3" href="{{url_for('editar_cuenta_image', id=data['id'])}}">Fotos</a>
+        <a class="btn btn-primary m-3" href="{{url_for('editar_cuenta_songs', id=data['id'])}}">Canciones</a>
+        <a class="btn btn-primary m-3" href="{{url_for('editar_integrantes', id=data['id'])}}">Integrantes</a>
+        <a class="btn btn-primary m-3" href="{{url_for('editar_sociales', id=data['id'])}}">Redes sociales</a>
+        <a class="btn btn-primary m-3" href="{{url_for('add_tour', id=data['id'])}}">Tour</a>
+    </div>
+    <div class="row">
+        <div class="col-md-12 col-xl-6 mt-5">
+            <h3>Agregar Integrantes</h3>
+            <form action="" method="post">
+                <div class="mb-1">
+                    <label for="nombre" class="form-label"></label>
+                    <input type="text" name="nombre" class="form-control" id="nombre" aria-describedby="identificacionHelp" placeholder="Nombre">
+                    
+                </div>
+                <div class="mt-0">
+                    <label for="apellido" class="form-label"></label>
+                    <input type="text" name="apellido" class="form-control" id="apellido" placeholder="apellido" required>
+                </div>
+                <div class="mt-0">
+                    <label for="instrumento" class="form-label"></label>
+                    <input type="text" name="instrumento" class="form-control" id="instrumento" placeholder="Instrumento" required>
+                </div>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-info mt-3 btn-block">Agregar integrante</button>
+                </div> 
+            </form>
+        </div>
+        <div class="col-md-12 col-xl-6 mt-5">
+            <h3>integrantes</h3>
+        </div>
+    </div>
+</div> 
+
+{% endblock %}

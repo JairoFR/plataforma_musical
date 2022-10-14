@@ -1,0 +1,70 @@
+{% extends "/base.html" %}
+{% block titulo %}{% endblock %}
+{% block head %}
+<style>
+    body {
+        background: #03001e;  /* fallback for old browsers */
+        background: -webkit-linear-gradient(to right, #fdeff9, #ec38bc, #7303c0, #03001e);  /* Chrome 10-25, Safari 5.1-6 */
+        background: linear-gradient(to right, #fdeff9, #ec38bc, #7303c0, #03001e); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    }
+</style>
+
+{% endblock %}
+
+
+{% block contenido %}
+<div class="container-fluid color pt-3">
+    <div class="row">
+        <div class="col-xl-4 col-lg-4">
+                <a class="btn btn-outline-light " href="/" aria-label="Settings">
+                    <i class="fa fa-home" aria-hidden="true"></i>
+                </a>
+        </div>
+        <div class="col-xl-4 col-lg-4 ms-5 text-center">
+            <h4 class="titulo">TuBanD</h4>
+            <p  class="font-weight-bold titulo_inicio">Descubre Nuevos artistas y bandas emergentes</p> 
+        </div>
+        <div class="col-xl-4 col-lg-4 ms-5"> 
+
+        </div>
+    </div>
+</div>
+<div class="container"> 
+    <div class="row d-flex justify-content-center">
+        <div class="col-md-6 col-xl-6 col-lg-6">
+            <form action="/registrar_form/{{data['nombre']}}" method="post">
+
+                <div class="mb-3">
+                    <label for="nombre_registro" class="form-label mt-5"></label>
+                    <input type="text" name="username" class="form-control" id="username" placeholder="{{data['username']}}">
+                </div>
+                <div class="mb-3">
+                    <label for="email_registro" class="form-label"></label>
+                    <input type="email" name="email" class="form-control" id="email_registro" aria-describedby="emailHelp" placeholder="Correo Electrónico">
+    
+                </div>
+                <div class="mb-3">
+                    <label for="password_registro" class="form-label"></label>
+                    <input type="password" name="password" class="form-control" id="password_registro" placeholder="Contraseña">
+                </div>
+                <div class="mb-3">
+                    <label for="cpassword_registro" class="form-label"></label>
+                    <input type="password" name="cpassword" class="form-control" id="cpassword_registro" placeholder="Confirmar Contraseña">
+                </div>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary btn-block">Crear {{data['nombre']}}</button>
+                </div>
+            </form>
+            <div class="mt-3 text-center">
+                <p class="font-weight-bold ">Ya tienes una cuenta? <a class="text-light" href="/login">Inicia sesion.</a></p>
+                <p class="font-weight-bold">No eres un {{data['nombre']}}? registrate como <a class="text-light" href="/registrarse/{{data['tipo']}}">{{data['tipo']}}.</a></p>
+            </div>
+            
+        </div>
+    </div>
+
+
+</div>
+
+
+{% endblock %}

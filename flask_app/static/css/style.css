@@ -1,0 +1,76 @@
+
+body {
+    margin:0;
+    padding:0
+  }
+
+.titulo{
+    color: white;
+}
+
+
+.color{
+    background-color:black;
+}
+
+#titulo_inicio{
+    font-size: 3rem;
+    -webkit-text-stroke: 0.4px rgb(0, 0, 0);
+    color: white;
+}
+
+.image_banda{
+    height: 400px;
+    width: 100%;
+}
+.image_carnet{
+    height: 100px;
+    width: 100%;
+}
+@media (min-width: 791px) and (max-width: 1600px){
+    .titulo_inicio{
+        font-size: 69%;
+        color: white;
+    }
+   
+}
+
+@media (min-width: 500px) and (max-width: 790.98px) {
+    .titulo_inicio {
+        font-size: 69%; 
+        color: white; 
+    }
+    .img{
+        width: 100%;
+        height: 500px;
+}
+}
+@media (max-width: 575.98px) { 
+    .titulo_inicio{
+        font-size: 60%;
+        margin-bottom: 1%;
+        color: white;
+    }
+    .img{
+        width: 100%;
+        height: 300px;
+}
+    .titulo_form{
+        font-size: 30px;
+    }
+
+    .comienza{
+        font-size: 10px;
+        color: rgb(0, 0, 0);
+        padding: 5px 10px;
+        margin: 0px;
+}
+    .signing{
+        font-size: 10px;
+    }
+}
+
+.titulo_registrese{
+    font-size: 20px;
+    
+}

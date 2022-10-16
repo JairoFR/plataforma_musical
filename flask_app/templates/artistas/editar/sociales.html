@@ -20,55 +20,66 @@
         </div>
     </div>
     <div class="row d-flex justify-content-center">
-        <a class="btn btn-outline-light m-2" href="{{url_for('artista_logueado', id=data['id'])}}">Home</a>
-        <a class="btn btn-outline-light m-2" href="{{url_for('tour', id=data['id'])}}">Tour</a>
+        <a class="btn btn-outline-light m-2" href="{{url_for('artista_logueado', id=session['artista'])}}">Home</a>
+        <a class="btn btn-outline-light m-2" href="{{url_for('tour')}}">Tour</a>
         <a class="btn btn-outline-light m-2" href="">Discografia</a>
     </div>
 </div>
     <div class="container">
         <div class="d-flex justify-content-center">
-            <a class="btn btn-primary m-3" href="{{url_for('editar_cuenta_biografia', id=data['id'])}}">Biografia</a>
-            <a class="btn btn-primary m-3" href="{{url_for('editar_cuenta_image', id=data['id'])}}">Fotos</a>
-            <a class="btn btn-primary m-3" href="{{url_for('editar_cuenta_songs', id=data['id'])}}">Canciones</a>
-            <a class="btn btn-primary m-3" href="{{url_for('editar_integrantes', id=data['id'])}}">Integrantes</a>
-            <a class="btn btn-primary m-3" href="{{url_for('editar_sociales', id=data['id'])}}">Redes sociales</a>
-            <a class="btn btn-primary m-3" href="{{url_for('add_tour', id=data['id'])}}">Tour</a>
+            <a class="btn btn-primary m-3" href="{{url_for('editar_cuenta_biografia')}}">Biografia</a>
+            <a class="btn btn-primary m-3" href="{{url_for('add_image')}}">Fotos</a>
+            <a class="btn btn-primary m-3" href="{{url_for('add_songs')}}">Canciones</a>
+            <a class="btn btn-primary m-3" href="{{url_for('add_integrantes')}}">Integrantes</a>
+            <a class="btn btn-primary m-3" href="{{url_for('add_sociales')}}">Redes sociales</a>
+            <a class="btn btn-primary m-3" href="{{url_for('add_tour')}}">Tour</a>
+            <a class="btn btn-primary m-3" href="{{url_for('add_genero')}}">Genero musical</a>
             
         </div>
         <h3>Agrega el link de tus redes sociales</h3>
-        <div class="row d-flex justify-content-center">
+        <div class="row">
             <div class="col-md-12 col-xl-6 mt-5">
     
                 <form action="" method="post">
-                    <div class="mb-1">
-                        <label for="facebook" class="form-label"></label>
-                        <input type="text" name="facebook"     class="form-control" id="facebook" aria-describedby="identificacionHelp" placeholder="facebook">
-                        
-                    </div>
-                    <div class="mt-0">
-                        <label for="youtube" class="form-label"></label>
-                        <input type="text" name="youtube" class="form-control" id="youtube" placeholder="youtube">
-                    </div>
-                    <div class="mt-0">
-                        <label for="instagram" class="form-label"></label>
-                        <input type="text" name="instagram" class="form-control" id="instagram" placeholder="instagram">
-                    </div>
-                    <div class="mt-0">
-                        <label for="spotify" class="form-label"></label>
-                        <input type="text" name="spotify" class="form-control" id="spotify" placeholder="spotify">
-                    </div>
-                    <div class="mt-0">
-                        <label for="apple_music" class="form-label"></label>
-                        <input type="text" name="apple_music" class="form-control" id="apple_music" placeholder="apple_music">
-                    </div> 
-                    <div class="mt-0">
-                        <label for="amazon_music" class="form-label"></label>
-                        <input type="text" name="amazon_music" class="form-control" id="amazon_music" placeholder="amazon_music">
+                    <select class="custom-select custom-select-sm" name="red_social">
+                        <option selected>Selecciona una red social</option>
+                        <option value="Facebook">Facebook</option>
+                        <option value="Youtube">Youtube</option>
+                        <option value="Amazon_music">Amazon_music</option>
+                        <option value="Apple_music">Apple_music</option>
+                        <option value="Tidal">Tidal</option>
+                        <option value="Spotify">Spotify</option>
+                        <option value="Instagram">Instagram</option>
+                    </select>
+                    <div class="mt-3">
+                        <label for="link" class="form-label"></label>
+                        <input type="text" name="link" class="form-control" id="link" required placeholder="Link">
                     </div>
                     <div class="text-center">
                         <button type="submit" class="btn btn-info mt-3 btn-block">Agregar</button>
                     </div>
                 </form>
+            </div>
+            <div class="col-md-12 col-xl-6 mt-5">
+                {% if sociales ==  None %}
+                <p>Sin Redes</p>
+            {% else %}
+            <table class="table table-borderless">
+                <thead>
+                    <tr>
+                        <th scope="col">Redes</th>
+                    </tr>
+                </thead>
+                    <tbody>
+                        {% for social in sociales%}
+                        <tr>
+                            <th>{{social.link}}</th>
+                            <th><a href="{{url_for('destroy_redes', id=social.social_band_id)}}">Eliminar</a></th>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% endif%}
             </div>
         </div>
     </div>

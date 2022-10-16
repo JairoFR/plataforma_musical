@@ -20,27 +20,28 @@
         </div>
     </div>
     <div class="row d-flex justify-content-center">
-        <a class="btn btn-outline-light m-2" href="{{url_for('artista_logueado', id=data['id'])}}">Home</a>
-        <a class="btn btn-outline-light m-2" href="{{url_for('tour', id=data['id'])}}">Tour</a>
+        <a class="btn btn-outline-light m-2" href="{{url_for('artista_logueado', id=session['artista'])}}">Home</a>
+        <a class="btn btn-outline-light m-2" href="{{url_for('tour')}}">Tour</a>
         <a class="btn btn-outline-light m-2" href="">Discografia</a>
     </div>
 </div>
 <div class="container">
     <div class="d-flex justify-content-center">
-        <a class="btn btn-primary m-3" href="{{url_for('editar_cuenta_biografia', id=data['id'])}}">Biografia</a>
-        <a class="btn btn-primary m-3" href="{{url_for('editar_cuenta_image', id=data['id'])}}">Fotos</a>
-        <a class="btn btn-primary m-3" href="{{url_for('editar_cuenta_songs', id=data['id'])}}">Canciones</a>
-        <a class="btn btn-primary m-3" href="{{url_for('editar_integrantes', id=data['id'])}}">Integrantes</a>
-        <a class="btn btn-primary m-3" href="{{url_for('editar_sociales', id=data['id'])}}">Redes sociales</a>
-        <a class="btn btn-primary m-3" href="{{url_for('add_tour', id=data['id'])}}">Tour</a>
+        <a class="btn btn-primary m-3" href="{{url_for('editar_cuenta_biografia')}}">Biografia</a>
+        <a class="btn btn-primary m-3" href="{{url_for('add_image')}}">Fotos</a>
+        <a class="btn btn-primary m-3" href="{{url_for('add_songs')}}">Canciones</a>
+        <a class="btn btn-primary m-3" href="{{url_for('add_integrantes')}}">Integrantes</a>
+        <a class="btn btn-primary m-3" href="{{url_for('add_sociales')}}">Redes sociales</a>
+        <a class="btn btn-primary m-3" href="{{url_for('add_tour')}}">Tour</a>
+        <a class="btn btn-primary m-3" href="{{url_for('add_genero')}}">Genero musical</a>
     </div>
     <div class="row">
         <div class="col-md-12 col-xl-6 mt-5">
             <h3>Agregar Integrantes</h3>
-            <form action="" method="post">
+            <form action="{{url_for('add_integrantes')}}" method="post">
                 <div class="mb-1">
                     <label for="nombre" class="form-label"></label>
-                    <input type="text" name="nombre" class="form-control" id="nombre" aria-describedby="identificacionHelp" placeholder="Nombre">
+                    <input type="text" name="nombre" class="form-control" id="nombre" aria-describedby="identificacionHelp" placeholder="Nombre" required>
                     
                 </div>
                 <div class="mt-0">
@@ -57,7 +58,28 @@
             </form>
         </div>
         <div class="col-md-12 col-xl-6 mt-5">
-            <h3>integrantes</h3>
+            <h3>Integrantes</h3>
+            {% if integrantes ==  None %}
+                <p>Sin integrantes</p>
+            {% else %}
+            <table class="table table-borderless">
+                <thead>
+                    <tr>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Instrumento/voz</th>
+                    </tr>
+                </thead>
+                    <tbody>
+                        {% for integrante in integrantes%}
+                        <tr>
+                            <th>{{integrante.nombre}}</th>
+                            <td>{{integrante.instrumento}}</td>
+                            <td><a href="{{url_for('destroy_integrante', id=integrante.integrantes_id)}}">Eliminar</a></td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% endif%}
         </div>
     </div>
 </div> 

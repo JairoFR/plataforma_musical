@@ -20,13 +20,14 @@
         </div>
     </div>
     <div class="row d-flex justify-content-center">
-        <a class="btn btn-outline-light m-2" href="{{url_for('artista_logueado', id=data['id'])}}">Home</a>
-        <a class="btn btn-outline-light m-2" href="{{url_for('tour', id=data['id'])}}">Tour</a>
+        <a class="btn btn-outline-light m-2" href="{{url_for('artista_logueado', id=session['artista'])}}">Home</a>
+        <a class="btn btn-outline-light m-2" href="{{url_for('tour')}}">Tour</a>
         <a class="btn btn-outline-light m-2" href="">Discografia</a>
         <a class="btn btn-outline-light m-2" href="">Contacto</a>
-        <a class="btn btn-outline-light m-2" href="{{url_for('editar_cuenta_biografia', id=data['id'])}}">Editar cuenta</a>
+        <a class="btn btn-outline-light m-2" href="{{url_for('editar_cuenta_biografia')}}">Editar cuenta</a>
     </div>
 </div>
+{%for %}
 <div class="container border mt-5">
     <h1 class="text-center mt-3">Los Lumaquinos alegres</h1>
     <div class="row mt-5">
@@ -105,7 +106,7 @@
                     </li>
                 </ul>
                 <audio controls>
-                    <source src="{{ url_for('static', filename='/img/aguacero.mp3') }}" type="audio/mp3">
+                    <source src="{{ url_for('static', filename='/img/02_El_Aguacero.mp3') }}" type="audio/mp3">
                     <source src="horse.mp3" type="audio/mpeg">
                 </audio>
             </div>

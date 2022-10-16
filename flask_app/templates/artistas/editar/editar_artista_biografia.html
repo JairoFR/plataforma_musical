@@ -20,49 +20,54 @@
         </div>
     </div>
     <div class="row d-flex justify-content-center">
-        <a class="btn btn-outline-light m-2" href="{{url_for('artista_logueado', id=data['id'])}}">Home</a>
-        <a class="btn btn-outline-light m-2" href="{{url_for('tour', id=data['id'])}}">Tour</a>
+        <a class="btn btn-outline-light m-2" href="{{url_for('artista_logueado', id=session['artista'])}}">Home</a>
+        <a class="btn btn-outline-light m-2" href="{{url_for('tour')}}">Tour</a>
         <a class="btn btn-outline-light m-2" href="">Discografia</a>
     </div>
 </div>
     <div class="container">
         <h3 class="text-center mt-3">Editar cuenta</h3>
         <div class="d-flex justify-content-center">
-            <a class="btn btn-primary m-3" href="{{url_for('editar_cuenta_biografia', id=data['id'])}}">Biografia</a>
-            <a class="btn btn-primary m-3" href="{{url_for('editar_cuenta_image', id=data['id'])}}">Fotos</a>
-            <a class="btn btn-primary m-3" href="{{url_for('editar_cuenta_songs', id=data['id'])}}">Canciones</a>
-            <a class="btn btn-primary m-3" href="{{url_for('editar_integrantes', id=data['id'])}}">Integrantes</a>
-            <a class="btn btn-primary m-3" href="{{url_for('editar_sociales', id=data['id'])}}">Redes sociales</a>
-            <a class="btn btn-primary m-3" href="{{url_for('add_tour', id=data['id'])}}">Tour</a>
+            <a class="btn btn-primary m-3" href="{{url_for('editar_cuenta_biografia')}}">Biografia</a>
+            <a class="btn btn-primary m-3" href="{{url_for('add_image')}}">Fotos</a>
+            <a class="btn btn-primary m-3" href="{{url_for('add_songs')}}">Canciones</a>
+            <a class="btn btn-primary m-3" href="{{url_for('add_integrantes')}}">Integrantes</a>
+            <a class="btn btn-primary m-3" href="{{url_for('add_sociales')}}">Redes sociales</a>
+            <a class="btn btn-primary m-3" href="{{url_for('add_tour')}}">Tour</a>
+            <a class="btn btn-primary m-3" href="{{url_for('add_genero')}}">Genero musical</a>
 
         </div>
         <div class="row">
             <div class="col-md-12 col-xl-6 mt-5">
-                <form action="/login" method="post">
+                <form action="{{url_for('editar_cuenta_biografia', id=data['id'])}}" method="post">
                     {% for artista in artistas %}
                         <div class="mb-3">
-                            <label for="username" class="form-label"></label>
+                            <label for="username" class="form-label">Nombre artista/banda:</label>
                             <input type="text" value="{{artista.username}}" name="username" class="form-control" id="username" aria-describedby="emailHelp" placeholder="Username" required>
                         </div>
                         <div class="mb-3">
-                            <label for="email" class="form-label"></label>
+                            <label for="email" class="form-label">Email:</label>
                             <input type="email" value="{{artista.email}}" name="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="email" required>
                         </div>
-                    {%endfor%}
+                  
                     <div class="mb-3">
-                    {% for item in info_artista%}
-                        <label for="año_formacion" class="form-label"></label>
-                        <input type="number" value="{{item.año_formacion}}" name="año_formacion" class="form-control" id="año_formacion" aria-describedby="emailHelp" placeholder="Año formacion" required>
+                        <label for="año_formacion" class="form-label">Año Formacion</label>
+                        <input type="number" value="{{artista.año_formacion}}" name="año_formacion" class="form-control" id="año_formacion" aria-describedby="emailHelp" required>
                     </div>
                     <div class="mb-1">
-                        <textarea name="biografia" id="" cols="70" rows="10" placeholder="Biografia" required>{{item.biografia}}</textarea>
+                        <label for="biografia" class="form-label">Biografia:</label>
+                        <textarea name="biografia" id="" cols="70" rows="10" placeholder="Biografia" required>{{artista.biografia}}</textarea>
                     </div>
                     {% endfor %}
                     <div class="text-center">
-                        <button type="submit" class="btn btn-info mt-3 btn-block">Agregar</button>
+                        <button type="submit" class="btn btn-info mt-3 btn-block">Actualizar</button>
                     </div> 
                 </form>
             </div>
         </div>
     </div>
 {% endblock %}
+
+
+
+

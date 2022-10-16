@@ -15,7 +15,9 @@ class BaseModelo:
     
     @classmethod
     def destroy(cls,data):
-        query  = f"DELETE FROM {cls.modelo} WHERE id = %(id)s;"
+        print('entro a destroy', data)
+        query  = f"DELETE FROM {cls.modelo} WHERE artistas_id = %(data)s;"
+        data = { 'data': data}
         return connectToMySQL(os.environ.get("BASE_DATOS_NOMBRE")).query_db(query,data)
     
     @classmethod
@@ -29,6 +31,7 @@ class BaseModelo:
 
         query = f"INSERT INTO {cls.modelo} ( {columnas}created_at, updated_at ) VALUES ( {filas}NOW() , NOW() );"
         resultado = connectToMySQL(os.environ.get("BASE_DATOS_NOMBRE")).query_db( query, data ) 
+        print('resultado save base', resultado)
         return resultado
     
     @classmethod
@@ -36,8 +39,6 @@ class BaseModelo:
         query = f"SELECT * FROM {cls.modelo} where artistas_id = %(id)s;"
         data = { 'id' : id }
         results = connectToMySQL(os.environ.get("BASE_DATOS_NOMBRE")).query_db(query, data)
-        print("results", results[0])
-        
         if len(results) > 0:
             return results
         else:

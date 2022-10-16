@@ -5,6 +5,9 @@ SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
 
 -- -----------------------------------------------------
+-- Schema mydb
+-- -----------------------------------------------------
+-- -----------------------------------------------------
 -- Schema db_plataforma
 -- -----------------------------------------------------
 DROP SCHEMA IF EXISTS `db_plataforma` ;
@@ -23,32 +26,13 @@ CREATE TABLE IF NOT EXISTS `db_plataforma`.`artistas` (
   `username` VARCHAR(255) NULL DEFAULT NULL,
   `email` VARCHAR(255) NULL DEFAULT NULL,
   `password` VARCHAR(255) NULL DEFAULT NULL,
+  `biografia` TEXT NULL DEFAULT NULL,
+  `año_formacion` INT NULL DEFAULT NULL,
   `created_at` DATETIME NULL DEFAULT NULL,
   `updated_at` DATETIME NULL DEFAULT NULL,
   PRIMARY KEY (`artistas_id`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 4
-DEFAULT CHARACTER SET = utf8mb3;
-
-
--- -----------------------------------------------------
--- Table `db_plataforma`.`info_artistas`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `db_plataforma`.`info_artistas` (
-  `info_artistas_id` INT NOT NULL AUTO_INCREMENT,
-  `artistas_id` INT NOT NULL,
-  `año_formacion` INT NULL DEFAULT NULL,
-  `biografia` TEXT NULL DEFAULT NULL,
-  `updated_at` DATETIME NULL DEFAULT NULL,
-  `created_at` DATETIME NULL DEFAULT NULL,
-  PRIMARY KEY (`info_artistas_id`),
-  INDEX `fk_info_artistas_artistas1_idx` (`artistas_id` ASC) VISIBLE,
-  CONSTRAINT `fk_info_artistas_artistas1`
-    FOREIGN KEY (`artistas_id`)
-    REFERENCES `db_plataforma`.`artistas` (`artistas_id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB
+AUTO_INCREMENT = 5
 DEFAULT CHARACTER SET = utf8mb3;
 
 
@@ -57,16 +41,75 @@ DEFAULT CHARACTER SET = utf8mb3;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `db_plataforma`.`canciones` (
   `cancion_id` INT NOT NULL AUTO_INCREMENT,
-  `artista_id` INT NOT NULL,
   `cancion1` VARCHAR(255) NULL DEFAULT NULL,
   `updated_at` DATETIME NULL DEFAULT NULL,
   `created_at` DATETIME NULL DEFAULT NULL,
+  `artistas_artistas_id` INT NOT NULL,
   PRIMARY KEY (`cancion_id`),
-  INDEX `fk_canciones_artistas1_idx` (`artista_id` ASC) VISIBLE,
+  INDEX `fk_canciones_artistas1_idx` (`artistas_artistas_id` ASC) VISIBLE,
   CONSTRAINT `fk_canciones_artistas1`
-    FOREIGN KEY (`artista_id`)
-    REFERENCES `db_plataforma`.`info_artistas` (`info_artistas_id`))
+    FOREIGN KEY (`artistas_artistas_id`)
+    REFERENCES `db_plataforma`.`artistas` (`artistas_id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb3;
+
+
+-- -----------------------------------------------------
+-- Table `db_plataforma`.`paises`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `db_plataforma`.`paises` (
+  `pais_id` INT NOT NULL AUTO_INCREMENT,
+  `nombre` VARCHAR(255) NULL DEFAULT NULL,
+  `created_at` DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`pais_id`))
+ENGINE = InnoDB
+AUTO_INCREMENT = 2
+DEFAULT CHARACTER SET = utf8mb3;
+
+
+-- -----------------------------------------------------
+-- Table `db_plataforma`.`regiones`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `db_plataforma`.`regiones` (
+  `region_id` INT NOT NULL AUTO_INCREMENT,
+  `pais_id` INT NOT NULL,
+  `nombre` VARCHAR(255) NULL DEFAULT NULL,
+  `created_At` DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`region_id`),
+  INDEX `fk_regiones_paises_idx` (`pais_id` ASC) VISIBLE,
+  CONSTRAINT `fk_regiones_paises`
+    FOREIGN KEY (`pais_id`)
+    REFERENCES `db_plataforma`.`paises` (`pais_id`))
+ENGINE = InnoDB
+AUTO_INCREMENT = 17
+DEFAULT CHARACTER SET = utf8mb3;
+
+
+-- -----------------------------------------------------
+-- Table `db_plataforma`.`ciudades`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `db_plataforma`.`ciudades` (
+  `id_ciudad` INT NOT NULL AUTO_INCREMENT,
+  `region_id` INT NOT NULL,
+  `pais_id` INT NOT NULL,
+  `name` VARCHAR(255) NOT NULL,
+  `updated_at` DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
+  `created_at` DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id_ciudad`),
+  INDEX `fk_ciudades_regiones1_idx` (`region_id` ASC) VISIBLE,
+  INDEX `fk_ciudades_paises1_idx` (`pais_id` ASC) VISIBLE,
+  CONSTRAINT `fk_ciudades_paises1`
+    FOREIGN KEY (`pais_id`)
+    REFERENCES `db_plataforma`.`paises` (`pais_id`),
+  CONSTRAINT `fk_ciudades_regiones1`
+    FOREIGN KEY (`region_id`)
+    REFERENCES `db_plataforma`.`regiones` (`region_id`))
+ENGINE = InnoDB
+AUTO_INCREMENT = 347
 DEFAULT CHARACTER SET = utf8mb3;
 
 
@@ -149,77 +192,18 @@ DEFAULT CHARACTER SET = utf8mb3;
 CREATE TABLE IF NOT EXISTS `db_plataforma`.`date_eventos` (
   `date_eventos_id` INT NOT NULL AUTO_INCREMENT,
   `artistas_id` INT NOT NULL,
-  `nombre_evento` VARCHAR(255) NULL,
+  `nombre_evento` VARCHAR(255) NULL DEFAULT NULL,
   `fecha` DATE NULL DEFAULT NULL,
-  `hora` TIME NULL,
-  `created_at` DATETIME NULL DEFAULT NOW(),
-  `updated_at` DATETIME NULL DEFAULT NOW(),
+  `hora` TIME NULL DEFAULT NULL,
+  `created_at` DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`date_eventos_id`),
   INDEX `fk_date_eventos_artistas1_idx` (`artistas_id` ASC) VISIBLE,
   CONSTRAINT `fk_date_eventos_artistas1`
     FOREIGN KEY (`artistas_id`)
-    REFERENCES `db_plataforma`.`artistas` (`artistas_id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    REFERENCES `db_plataforma`.`artistas` (`artistas_id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb3;
-
-
--- -----------------------------------------------------
--- Table `db_plataforma`.`paises`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `db_plataforma`.`paises` (
-  `pais_id` INT NOT NULL AUTO_INCREMENT,
-  `nombre` VARCHAR(255) NULL DEFAULT NULL,
-  `created_at` DATETIME NULL DEFAULT NOW(),
-  `updated_at` DATETIME NULL DEFAULT NOW(),
-  PRIMARY KEY (`pais_id`))
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb3;
-
-
--- -----------------------------------------------------
--- Table `db_plataforma`.`regiones`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `db_plataforma`.`regiones` (
-  `region_id` INT NOT NULL AUTO_INCREMENT,
-  `pais_id` INT NOT NULL,
-  `nombre` VARCHAR(255) NULL DEFAULT NULL,
-  `created_At` DATETIME NULL DEFAULT NOW(),
-  `updated_at` DATETIME NULL DEFAULT NOW(),
-  PRIMARY KEY (`region_id`),
-  INDEX `fk_regiones_paises_idx` (`pais_id` ASC) VISIBLE,
-  CONSTRAINT `fk_regiones_paises`
-    FOREIGN KEY (`pais_id`)
-    REFERENCES `db_plataforma`.`paises` (`pais_id`))
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb3;
-
-
--- -----------------------------------------------------
--- Table `db_plataforma`.`ciudades`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `db_plataforma`.`ciudades` (
-  `id_ciudad` INT NOT NULL AUTO_INCREMENT,
-  `region_id` INT NOT NULL,
-  `pais_id` INT NOT NULL,
-  `name` VARCHAR(255) NOT NULL,
-  `updated_at` DATETIME NULL DEFAULT NOW(),
-  `created_at` DATETIME NULL DEFAULT NOW(),
-  PRIMARY KEY (`id_ciudad`),
-  INDEX `fk_ciudades_regiones1_idx` (`region_id` ASC) VISIBLE,
-  INDEX `fk_ciudades_paises1_idx` (`pais_id` ASC) VISIBLE,
-  CONSTRAINT `fk_ciudades_regiones1`
-    FOREIGN KEY (`region_id`)
-    REFERENCES `db_plataforma`.`regiones` (`region_id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_ciudades_paises1`
-    FOREIGN KEY (`pais_id`)
-    REFERENCES `db_plataforma`.`paises` (`pais_id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
@@ -242,36 +226,24 @@ CREATE TABLE IF NOT EXISTS `db_plataforma`.`direcciones` (
   INDEX `fk_direcciones_usuarios1_idx` (`usuarios_id` ASC) VISIBLE,
   INDEX `fk_direcciones_date_eventos1_idx` (`date_eventos_id` ASC) VISIBLE,
   INDEX `fk_direcciones_artistas1_idx` (`artistas_id` ASC) VISIBLE,
-  CONSTRAINT `fk_direcciones_ciudades1`
-    FOREIGN KEY (`id_ciudad`)
-    REFERENCES `db_plataforma`.`ciudades` (`id_ciudad`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_direcciones_regiones1`
-    FOREIGN KEY (`region_id`)
-    REFERENCES `db_plataforma`.`regiones` (`region_id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_direcciones_paises1`
-    FOREIGN KEY (`pais_id`)
-    REFERENCES `db_plataforma`.`paises` (`pais_id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_direcciones_usuarios1`
-    FOREIGN KEY (`usuarios_id`)
-    REFERENCES `db_plataforma`.`usuarios` (`usuarios_id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_direcciones_date_eventos1`
-    FOREIGN KEY (`date_eventos_id`)
-    REFERENCES `db_plataforma`.`date_eventos` (`date_eventos_id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
   CONSTRAINT `fk_direcciones_artistas1`
     FOREIGN KEY (`artistas_id`)
-    REFERENCES `db_plataforma`.`artistas` (`artistas_id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    REFERENCES `db_plataforma`.`artistas` (`artistas_id`),
+  CONSTRAINT `fk_direcciones_ciudades1`
+    FOREIGN KEY (`id_ciudad`)
+    REFERENCES `db_plataforma`.`ciudades` (`id_ciudad`),
+  CONSTRAINT `fk_direcciones_date_eventos1`
+    FOREIGN KEY (`date_eventos_id`)
+    REFERENCES `db_plataforma`.`date_eventos` (`date_eventos_id`),
+  CONSTRAINT `fk_direcciones_paises1`
+    FOREIGN KEY (`pais_id`)
+    REFERENCES `db_plataforma`.`paises` (`pais_id`),
+  CONSTRAINT `fk_direcciones_regiones1`
+    FOREIGN KEY (`region_id`)
+    REFERENCES `db_plataforma`.`regiones` (`region_id`),
+  CONSTRAINT `fk_direcciones_usuarios1`
+    FOREIGN KEY (`usuarios_id`)
+    REFERENCES `db_plataforma`.`usuarios` (`usuarios_id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb3;
 
@@ -281,15 +253,17 @@ DEFAULT CHARACTER SET = utf8mb3;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `db_plataforma`.`fotos` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `info_artistas_id` INT NOT NULL,
   `image1` VARCHAR(255) NULL DEFAULT NULL,
   `updated_at` DATETIME NULL DEFAULT NULL,
   `created_at` DATETIME NULL DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  INDEX `fk_fotos_info_artistas1_idx` (`info_artistas_id` ASC) VISIBLE,
-  CONSTRAINT `fk_fotos_info_artistas1`
-    FOREIGN KEY (`info_artistas_id`)
-    REFERENCES `db_plataforma`.`info_artistas` (`info_artistas_id`))
+  `artistas_artistas_id` INT NOT NULL,
+  PRIMARY KEY (`id`, `artistas_artistas_id`),
+  INDEX `fk_fotos_artistas1_idx` (`artistas_artistas_id` ASC) VISIBLE,
+  CONSTRAINT `fk_fotos_artistas1`
+    FOREIGN KEY (`artistas_artistas_id`)
+    REFERENCES `db_plataforma`.`artistas` (`artistas_id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb3;
 
@@ -308,20 +282,23 @@ DEFAULT CHARACTER SET = utf8mb3;
 
 
 -- -----------------------------------------------------
--- Table `db_plataforma`.`generos_musicales`
+-- Table `db_plataforma`.`integrantes`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `db_plataforma`.`generos_musicales` (
-  `artista_id` INT NOT NULL,
-  `genero_id` INT NOT NULL,
-  PRIMARY KEY (`artista_id`, `genero_id`),
-  INDEX `fk_artistas_has_generos_musicales_generos_musicales1_idx` (`genero_id` ASC) VISIBLE,
-  INDEX `fk_artistas_has_generos_musicales_artistas1_idx` (`artista_id` ASC) VISIBLE,
-  CONSTRAINT `fk_artistas_has_generos_musicales_artistas1`
-    FOREIGN KEY (`artista_id`)
-    REFERENCES `db_plataforma`.`info_artistas` (`info_artistas_id`),
-  CONSTRAINT `fk_artistas_has_generos_musicales_generos_musicales1`
-    FOREIGN KEY (`genero_id`)
-    REFERENCES `db_plataforma`.`generos` (`genero_id`))
+CREATE TABLE IF NOT EXISTS `db_plataforma`.`integrantes` (
+  `integrantes_id` INT NOT NULL,
+  `artistas_id` INT NOT NULL,
+  `nombre` VARCHAR(255) NULL DEFAULT NULL,
+  `apellido` VARCHAR(255) NULL DEFAULT NULL,
+  `instrumento` VARCHAR(255) NULL DEFAULT NULL,
+  `created_at` DATETIME NULL DEFAULT NULL,
+  `updated_at` DATETIME NULL DEFAULT NULL,
+  PRIMARY KEY (`integrantes_id`),
+  INDEX `fk_integrantes_artistas1_idx` (`artistas_id` ASC) VISIBLE,
+  CONSTRAINT `fk_integrantes_artistas1`
+    FOREIGN KEY (`artistas_id`)
+    REFERENCES `db_plataforma`.`artistas` (`artistas_id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb3;
 
@@ -350,7 +327,7 @@ DEFAULT CHARACTER SET = utf8mb3;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `db_plataforma`.`sociales_band` (
   `social_band_id` INT NOT NULL AUTO_INCREMENT,
-  `info_artistas_id` INT NOT NULL,
+  `artistas_id` INT NOT NULL,
   `facebook` VARCHAR(255) NULL DEFAULT NULL,
   `youtube` VARCHAR(255) NULL DEFAULT NULL,
   `instagram` VARCHAR(255) NULL DEFAULT NULL,
@@ -360,33 +337,37 @@ CREATE TABLE IF NOT EXISTS `db_plataforma`.`sociales_band` (
   `updated_at` DATETIME NULL DEFAULT NULL,
   `created_at` DATETIME NULL DEFAULT NULL,
   PRIMARY KEY (`social_band_id`),
-  INDEX `fk_sociales_band_info_artistas1_idx` (`info_artistas_id` ASC) VISIBLE,
-  CONSTRAINT `fk_sociales_band_info_artistas1`
-    FOREIGN KEY (`info_artistas_id`)
-    REFERENCES `db_plataforma`.`info_artistas` (`info_artistas_id`))
+  INDEX `fk_sociales_band_artistas1_idx` (`artistas_id` ASC) VISIBLE,
+  CONSTRAINT `fk_sociales_band_artistas1`
+    FOREIGN KEY (`artistas_id`)
+    REFERENCES `db_plataforma`.`artistas` (`artistas_id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb3;
 
 
 -- -----------------------------------------------------
--- Table `db_plataforma`.`integrantes`
+-- Table `db_plataforma`.`generos_artista`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `db_plataforma`.`integrantes` (
-  `integrantes_id` INT NOT NULL,
-  `info_artistas_id` INT NOT NULL,
-  `nombre` VARCHAR(255) NULL,
-  `apellido` VARCHAR(255) NULL,
-  `instrumento` VARCHAR(255) NULL,
-  `created_at` DATETIME NULL,
-  `updated_at` DATETIME NULL,
-  PRIMARY KEY (`integrantes_id`),
-  INDEX `fk_integrantes_info_artistas1_idx` (`info_artistas_id` ASC) VISIBLE,
-  CONSTRAINT `fk_integrantes_info_artistas1`
-    FOREIGN KEY (`info_artistas_id`)
-    REFERENCES `db_plataforma`.`info_artistas` (`info_artistas_id`)
+CREATE TABLE IF NOT EXISTS `db_plataforma`.`generos_artista` (
+  `genero_id` INT NOT NULL,
+  `artistas_id` INT NOT NULL,
+  PRIMARY KEY (`genero_id`, `artistas_id`),
+  INDEX `fk_generos_has_artistas_artistas1_idx` (`artistas_id` ASC) VISIBLE,
+  INDEX `fk_generos_has_artistas_generos1_idx` (`genero_id` ASC) VISIBLE,
+  CONSTRAINT `fk_generos_has_artistas_generos1`
+    FOREIGN KEY (`genero_id`)
+    REFERENCES `db_plataforma`.`generos` (`genero_id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_generos_has_artistas_artistas1`
+    FOREIGN KEY (`artistas_id`)
+    REFERENCES `db_plataforma`.`artistas` (`artistas_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb3;
 
 
 SET SQL_MODE=@OLD_SQL_MODE;

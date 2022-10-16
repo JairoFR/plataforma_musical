@@ -47,7 +47,7 @@ def registrar():
             "password" : pw_hash
         }
 
-        resultado = Artista.save(data)
+        resultado = Artista.save_usuario(data)
 
         if not resultado:
             flash("error al crear el usuario", "error")

@@ -5,35 +5,40 @@
 
 {% block contenido %}
 <div class="container-fluid color pt-3 ">
-    <div class="row">
-        <div class="col-xl-4 col-lg-4 ">
-            <a class="btn btn-outline-light " href="/" aria-label="Settings">
-                <i class="fa fa-home" aria-hidden="true"></i>
+    <div class="row ">
+        <div class="col-x-4 col-lg-2 text-center">
+            <a class="btn btn-outline-light me-3" href="{{url_for('artista_logueado', id=session['artista_id'])}}" aria-label="Settings">
+                <i class="fa fa-home " aria-hidden="true"></i>
             </a>
+            <h4 class="titulo ms-3 d-inline-flex">TuBanD</h4>
         </div>
-        <div class="col-xl-4 col-lg-4 ms-5 text-center">
-            <h4 class="titulo">TuBanD</h4>
+        <div class="col-x-4 col-lg-7 text-center">
+            <a class="btn btn-outline-light m-2" href="{{url_for('tour')}}">Tour</a>
+            <a class="btn btn-outline-light m-2" href="">Discografia</a>
+            <a class="btn btn-outline-light m-2" href="">Contacto</a>
+            <a class="btn btn-outline-light m-2" href="">Buscar artistas</a>  
             <p class="font-weight-bold titulo_inicio">Descubre Nuevos artistas y bandas emergentes</p>
         </div>
-        <div class="col-xl-4 col-lg-4 text-right ">
+        <div class="col-xl-2 col-lg-2 text-right ">
             <a class="btn btn-danger signing " href='/logout'>Logout</a>
         </div>
     </div>
-    <div class="row d-flex justify-content-center">
-        <a class="btn btn-outline-light m-2" href="{{url_for('artista_logueado', id=session['artista'])}}">Home</a>
-        <a class="btn btn-outline-light m-2" href="{{url_for('tour')}}">Tour</a>
-        <a class="btn btn-outline-light m-2" href="">Discografia</a>
+    <div class="row m-3">
+        
     </div>
 </div>
 <div class="container">
+    <div class="alert alert-primary" role="alert">
+        <h6 class="text-center mt-3">Agrega informacion para que te puedan conocer, mientras mas informacion completes mas conectaras con tu comunidad!</h6>    
+    </div>
     <div class="d-flex justify-content-center">
         <a class="btn btn-primary m-3" href="{{url_for('editar_cuenta_biografia')}}">Biografia</a>
-        <a class="btn btn-primary m-3" href="{{url_for('add_image')}}">Fotos</a>
-        <a class="btn btn-primary m-3" href="{{url_for('add_songs')}}">Canciones</a>
-        <a class="btn btn-primary m-3" href="{{url_for('add_integrantes')}}">Integrantes</a>
-        <a class="btn btn-primary m-3" href="{{url_for('add_sociales')}}">Redes sociales</a>
-        <a class="btn btn-primary m-3" href="{{url_for('add_tour')}}">Tour</a>
-        <a class="btn btn-primary m-3" href="{{url_for('add_genero')}}">Genero musical</a>
+            <a class="btn btn-primary m-3" href="{{url_for('add_image')}}">Fotos</a>
+            <a class="btn btn-primary m-3" href="{{url_for('add_songs')}}">Canciones</a>
+            <a class="btn btn-primary m-3" href="{{url_for('add_integrantes')}}">Integrantes</a>
+            <a class="btn btn-primary m-3" href="{{url_for('add_sociales')}}">Redes sociales</a>
+            <a class="btn btn-primary m-3" href="{{url_for('add_tour')}}">Tour</a>
+            <a class="btn btn-primary m-3" href="{{url_for('add_genero')}}">Genero musical</a> 
     </div>
     <div class="row">
         <div class="col-md-12 col-xl-6 mt-5">

@@ -49,3 +49,17 @@ class Cancion(BaseModelo): #Cambiar a nombre de modelo en singular
             is_valid = False
 
         return is_valid
+    
+    @classmethod
+    def get_by_id_songs(cls, id):
+        query = f"""SELECT canciones.cancion as cancion from {cls.modelo}
+                LEFT join artistas ON canciones.artistas_id =  artistas.artistas_id
+                WHERE artistas.artistas_id= %(id)s;"""
+
+        data = { 'id' : id }
+        results = connectToMySQL(os.environ.get("BASE_DATOS_NOMBRE")).query_db(query, data)
+        if len(results) > 0:
+            return results
+        else:
+            return None 
+

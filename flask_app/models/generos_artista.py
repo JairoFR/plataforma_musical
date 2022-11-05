@@ -32,7 +32,6 @@ class Generos_artista(BaseModelo): #Cambiar a nombre de modelo en singular
     def update(cls,data):
         query = f"UPDATE {cls.modelo} SET año_formacion = %(año_formacion)s, biografia = %(biografia)s, updated_at = NOW() WHERE artistas_id = %(artistas_id)s;"
         resultado = connectToMySQL(os.environ.get("BASE_DATOS_NOMBRE")).query_db(query, data)
-    
         return resultado
 
     # -- obtener generos por artista en session

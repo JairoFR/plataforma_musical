@@ -13,6 +13,7 @@ class Artista(BaseModelo): #Cambiar a nombre de modelo en singular
 
     def __init__( self , data ):
         self.artistas_id = data['artistas_id'] 
+        self.direcciones_id = data['direcciones_id'] 
         self.username = data['username']
         self.email = data['email']
         self.password = data['password']
@@ -35,6 +36,7 @@ class Artista(BaseModelo): #Cambiar a nombre de modelo en singular
         query = f"SELECT * FROM {cls.modelo} where artistas_id = %(data)s;"
         data = { 'data' : data }
         results = connectToMySQL(os.environ.get("BASE_DATOS_NOMBRE")).query_db(query, data)
+    
         all_data = []
 
         for data in results:
@@ -54,14 +56,19 @@ class Artista(BaseModelo): #Cambiar a nombre de modelo en singular
     
     @classmethod
     def update(cls,data):
-        print('artista update>>>>>', data)
         query = f"""UPDATE {cls.modelo} 
                     SET username = %(username)s, email = %(email)s, biografia = %(biografia)s, año_formacion= %(año_formacion)s, updated_at = NOW() 
                     WHERE artistas_id = %(artistas_id)s;"""
 
         resultado = connectToMySQL(os.environ.get("BASE_DATOS_NOMBRE")).query_db(query, data)
         return resultado
-    
+    @classmethod
+    def get_fotos_username(cls):
+        query = f"""SELECT artistas.username as username, fotos.image as foto, artistas.artistas_id as id FROM artistas
+                    JOIN fotos ON artistas.artistas_id = fotos.artistas_id;"""
+        results = connectToMySQL(os.environ.get("BASE_DATOS_NOMBRE")).query_db(query)
+        return results
+        
 
     @staticmethod
     def validar(data): 
@@ -101,3 +108,4 @@ class Artista(BaseModelo): #Cambiar a nombre de modelo en singular
 
 
 
+ 

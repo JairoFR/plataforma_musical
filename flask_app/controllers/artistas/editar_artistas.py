@@ -1,4 +1,4 @@
-import imghdr
+
 import os
 from flask_app import app
 from flask import render_template,redirect,request,session,flash, url_for
@@ -14,30 +14,6 @@ from flask_app.models.genero import Genero
 from flask_app.utils.utils import allowed_file
 from werkzeug.utils import secure_filename
 
-
-
-@app.route('/artista/<id>')
-def artista_logueado(id):
-
-    if 'artista' not in session:
-        flash('Primero tienes que logearte', 'error')
-        return redirect('/')
-    return render_template('/artistas/perfil_artista_adm.html')
-
-@app.route('/artista/tour')
-def tour():
-
-    if 'artista' not in session:
-        flash('Primero tienes que logearte', 'error')
-        return redirect('/')
-
-    data = {
-        'session': session['artista'],
-        'id': session['artista_id']
-
-        }
-
-    return render_template('/artistas/tour.html', data=data)
 
 @app.route('/artista/editar_cuenta/biografia', methods=['GET','POST'])
 def editar_cuenta_biografia():
@@ -72,7 +48,7 @@ def add_image():
         return render_template('/artistas/editar/add_artista_photo.html', imagenes=imagenes, total_imagenes=total_imagenes)
 
     image_max = len(imagenes)
-    if image_max > 3:
+    if image_max > 6:
         total_imagenes = True
         return render_template('/artistas/editar/add_artista_photo.html', imagenes=imagenes, total_imagenes=total_imagenes)
 
@@ -98,7 +74,7 @@ def upload_photo():
                 'image': filename,
                 'artistas_id': session['artista_id']
             }
-            Image.save(data)
+            Image.save_photo_artistas(data)
             return redirect(url_for('add_image')) 
 
 @app.route('/artista/destroy_image/<id>')
@@ -137,9 +113,15 @@ def add_sociales():
         return render_template('/artistas/editar/sociales.html', sociales=sociales)
     
     if request.method == 'POST':
+        print(request.form)
         data = {
-            'red_social': request.form['red_social'],
-            'link': request.form['link'],
+            'facebook': request.form['facebook'],
+            'youtube': request.form['youtube'],
+            'amazon_music': request.form['amazon_music'],
+            'apple_music': request.form['apple_music'],
+            'tidal': request.form['tidal'],
+            'spotify': request.form['spotify'],
+            'instagram': request.form['instagram'],
             'artistas_id': session['artista_id']
         }
         Social.save(data)

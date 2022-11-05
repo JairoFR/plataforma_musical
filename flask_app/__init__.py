@@ -1,6 +1,7 @@
+from os.path import join
 from flask import Flask
 import os
-from os.path import join
+
 
 carpeta = 'static\\uploads'
 BASEDIR = os.path.abspath(os.path.dirname(__file__))

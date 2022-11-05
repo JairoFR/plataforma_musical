@@ -13,7 +13,7 @@ class User(BaseModelo): #Cambiar a nombre de modelo en singular
 
     def __init__( self , data ):
         self.usuarios_id = data['usuarios_id'] 
-        self.direccion_id = data['direccion_id'] 
+        self.direcciones_id = data['direcciones_id'] 
         self.username = data['username']
         self.email = data['email']
         self.password = data['password']    
@@ -51,7 +51,7 @@ class User(BaseModelo): #Cambiar a nombre de modelo en singular
 
     @classmethod
     def update(cls,data):
-        query = f"UPDATE usuarios SET nombre = %(nombre)s, apellido = %(apellido)s, email = %(email)s, updated_at = NOW() WHERE id = %(id)s;"
+        query = f"UPDATE usuarios SET username = %(username)s, email = %(email)s, updated_at = NOW() WHERE usuarios_id = %(usuarios_id)s;"
         resultado = connectToMySQL(os.environ.get("BASE_DATOS_NOMBRE")).query_db(query, data)
     
         return resultado

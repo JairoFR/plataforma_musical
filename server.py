@@ -1,5 +1,5 @@
-from flask_app.controllers.artistas import editar_artistas,  login_artista
-from flask_app.controllers.usuarios import usuarios, login_fan
+from flask_app.controllers.artistas import editar_artistas,  login_artista, artistas
+from flask_app.controllers.usuarios import usuarios, login_fan, editar_usuarios
 from flask_app import app
 from flask import render_template,redirect,request,session,flash, url_for
 from flask_app.models.usuario import User
@@ -102,7 +102,7 @@ def login():
         session['usuario'] = usuarios.username
         session['usuario_id'] = usuarios.usuarios_id
 
-        return redirect(url_for('usuario_logueado', id=usuarios.username))
+        return redirect(url_for('usuario_logueado', id=usuarios.usuarios_id))
             
 @app.route('/logout')
 def logout():

@@ -7,6 +7,7 @@ class BaseModelo:
     def get_all(cls):
         query = f"SELECT * FROM {cls.modelo} ;"
         results = connectToMySQL(os.environ.get("BASE_DATOS_NOMBRE")).query_db(query)
+        print(results, '>>>>>>>>>>>>>>>')
         all_data = []
 
         for data in results:
@@ -19,6 +20,7 @@ class BaseModelo:
         query  = f"DELETE FROM {cls.modelo} WHERE artistas_id = %(data)s;"
         data = { 'data': data}
         return connectToMySQL(os.environ.get("BASE_DATOS_NOMBRE")).query_db(query,data)
+    
     
     @classmethod
     def save(cls, data ):
@@ -43,8 +45,7 @@ class BaseModelo:
             return results
         else:
             return None 
-    
-    
+
     @classmethod
     def update(cls,data):
 

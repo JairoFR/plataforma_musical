@@ -1,0 +1,61 @@
+{% extends "/base.html" %}
+{% block titulo %}{% endblock %}
+
+
+
+{% block contenido %}
+<div class="container-fluid color pt-3 ">
+    <div class="row ">
+        <div class="col-x-4 col-lg-2 text-center">
+            <a class="btn btn-outline-light me-3" href="{{url_for('usuario_logueado', id=session['usuario_id'])}}" aria-label="Settings">
+                <i class="fa fa-home " aria-hidden="true"></i>
+            </a>
+
+            <h4 class="titulo ms-3 d-inline-flex">TuBanD</h4>
+        </div>
+        <div class="col-x-4 col-lg-7 text-center">
+        
+            <h3 class="font-weight-bold text-white ">Descubre Nuevos artistas y bandas emergentes</h3>
+        </div>
+        <div class="col-xl-2 col-lg-2 text-right ">
+            <a class="btn btn-outline-light m-2" href="{{url_for('artistas_registrados')}}">Buscar artistas</a> 
+            <a class="btn btn-danger signing " href='/logout'>Logout</a>
+        </div>
+    </div>
+
+</div>
+    <div class="container">
+        <div class="alert alert-primary" role="alert">
+            <h6 class="text-center mt-3">Agrega informacion para que te puedan conocer, mientras mas informacion completes mas conectaras con tu comunidad!</h6>    
+        </div>
+        
+        <div class="d-flex justify-content-center">
+            <a class="btn btn-primary m-3" href="">Biografia</a>
+            <a class="btn btn-primary m-3" href="{{url_for('add_image_usuarios')}}">Fotos</a>
+
+        </div>
+        <div class="row">
+            <div class="col-md-12 col-xl-6 mt-5">
+                {%for user in usuarios%}
+                <form action="{{url_for('editar_biografia_users')}}" method="post">
+                        <div class="mb-3">
+                            <label for="username" class="form-label">Nombre usuario:</label>
+                            <input type="text" value="{{user.username}}" name="username" class="form-control" id="username" aria-describedby="emailHelp" placeholder="Username" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email:</label>
+                            <input type="email" value="{{user.email}}" name="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="email" required>
+                        </div>
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-info mt-3 btn-block">Actualizar</button>
+                    </div> 
+                </form>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+
+
+

@@ -1,0 +1,59 @@
+{% extends "/base.html" %}
+{% block titulo %}{% endblock %}
+
+
+
+{% block contenido %}
+<div class="container-fluid color pt-3 ">
+    <div class="row ">
+        <div class="col-x-2 col-lg-2 text-center">
+            <a class="btn btn-outline-light me-3" href="{{url_for('usuario_logueado', id=session['usuario_id'])}}" aria-label="Settings">
+                <i class="fa fa-home " aria-hidden="true"></i>
+            </a>
+        </div>
+        <div class="col-xl-5 col-lg-5 text-right">
+            <h4 class="titulo ms-3 d-inline-flex">TuBanD</h4>
+            <p class="font-weight-bold titulo_inicio">Descubre Nuevos artistas y bandas emergentes</p>
+        </div>
+        <div class="col-xl-5 col-lg-5 text-right ">
+            <a class="btn btn-outline-light m-2" href="{{url_for('editar_biografia_users')}}">Editar cuenta</a>
+            <a class="btn btn-outline-light m-2" href="{{url_for('artistas_registrados')}}">Buscar artistas</a> 
+            <a class="btn btn-danger signing " href='/logout'>Logout</a>
+        </div>
+    </div>
+    <div class="row m-3">
+        
+    </div>
+</div>
+
+<div class="container border mt-5">
+  <div class="row">
+
+
+        <div class="col-lg-5 text-center mt-3">
+            {%if imagenes == None%}
+                <img class="rounded-circle" style="width:100%;max-width:300px" src="{{ url_for('static', filename= 'img/avatar.webp') }}" alt="">
+                <a class="btn btn-primary m-3" href="{{url_for('add_image_usuarios')}}">Agregar Foto perfil</a>
+            {%else%}
+            {%for image in imagenes%}
+                <img class="rounded" style="width:100%;max-width:300px" src="{{ url_for('static', filename='uploads/' + image['image']) }}" alt="">
+            {%endfor%}
+            {%endif %}
+    
+        </div>
+        <div class="col-lg-7">
+            {%for user in usuarios%}
+            <h1 class="text-center mt-3">{{user.username | title}}</h1>
+            {%endfor%}
+            <h6>Bandas Favoritas:</h6>
+        </div>
+    </div>
+</div>
+ 
+
+    
+    
+
+
+
+{% endblock %}

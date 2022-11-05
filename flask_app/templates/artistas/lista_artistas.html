@@ -1,0 +1,44 @@
+{% extends "/base.html" %}
+{% block titulo %}{% endblock %}
+
+
+
+{% block contenido %}
+<div class="container-fluid color pt-3 ">
+    <div class="row ">
+        <div class="col-x-4 col-lg-2 text-center">
+            {% if 'artista' in session %}
+            <a class="btn btn-outline-light me-3" href="{{url_for('artista_logueado', id=session['artista_id'])}}" aria-label="Settings">
+                <i class="fa fa-home " aria-hidden="true"></i>
+            </a>
+            {%else%}
+            <a class="btn btn-outline-light me-3" href="{{url_for('usuario_logueado', id=session['usuario_id'])}}" aria-label="Settings">
+                <i class="fa fa-home " aria-hidden="true"></i>
+            </a>
+            {%endif%}
+            <h4 class="titulo ms-3 d-inline-flex">TuBanD</h4>
+        </div>
+        <div class="col-x-4 col-lg-7 text-center">
+        
+            <h3 class="font-weight-bold text-white ">Descubre Nuevos artistas y bandas emergentes</h3>
+        </div>
+        <div class="col-xl-2 col-lg-2 text-right ">
+            <a class="btn btn-danger signing " href='/logout'>Logout</a>
+        </div>
+    </div>
+
+</div>
+
+<div class="container border mt-5">
+    <div class="row m-2">
+        {% for artista in artistas%}
+        <div class="m-2">
+            <a href="{{url_for('perfil_artista', id=artista.id)}}"><img style="width:100%;max-width:300px; max-height: 300px;" src="{{ url_for('static', filename='uploads/' + artista['foto']) }}"></a> 
+        </div> 
+        {%endfor%} 
+    </div>
+   
+
+</div>
+
+{% endblock %}

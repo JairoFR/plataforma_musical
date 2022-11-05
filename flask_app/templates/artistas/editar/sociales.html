@@ -5,27 +5,32 @@
 
 {% block contenido %}
 <div class="container-fluid color pt-3 ">
-    <div class="row">
-        <div class="col-xl-4 col-lg-4 ">
-            <a class="btn btn-outline-light " href="/" aria-label="Settings">
-                <i class="fa fa-home" aria-hidden="true"></i>
+    <div class="row ">
+        <div class="col-x-4 col-lg-2 text-center">
+            <a class="btn btn-outline-light me-3" href="{{url_for('artista_logueado', id=session['artista_id'])}}" aria-label="Settings">
+                <i class="fa fa-home " aria-hidden="true"></i>
             </a>
+            <h4 class="titulo ms-3 d-inline-flex">TuBanD</h4>
         </div>
-        <div class="col-xl-4 col-lg-4 ms-5 text-center">
-            <h4 class="titulo">TuBanD</h4>
+        <div class="col-x-4 col-lg-7 text-center">
+            <a class="btn btn-outline-light m-2" href="{{url_for('tour')}}">Tour</a>
+            <a class="btn btn-outline-light m-2" href="">Discografia</a>
+            <a class="btn btn-outline-light m-2" href="">Contacto</a>
+            <a class="btn btn-outline-light m-2" href="">Buscar artistas</a>  
             <p class="font-weight-bold titulo_inicio">Descubre Nuevos artistas y bandas emergentes</p>
         </div>
-        <div class="col-xl-4 col-lg-4 text-right ">
+        <div class="col-xl-2 col-lg-2 text-right ">
             <a class="btn btn-danger signing " href='/logout'>Logout</a>
         </div>
     </div>
-    <div class="row d-flex justify-content-center">
-        <a class="btn btn-outline-light m-2" href="{{url_for('artista_logueado', id=session['artista'])}}">Home</a>
-        <a class="btn btn-outline-light m-2" href="{{url_for('tour')}}">Tour</a>
-        <a class="btn btn-outline-light m-2" href="">Discografia</a>
+    <div class="row m-3">
+        
     </div>
 </div>
     <div class="container">
+        <div class="alert alert-primary" role="alert">
+            <h6 class="text-center mt-3">Agrega informacion para que te puedan conocer, mientras mas informacion completes mas conectaras con tu comunidad!</h6>    
+        </div>
         <div class="d-flex justify-content-center">
             <a class="btn btn-primary m-3" href="{{url_for('editar_cuenta_biografia')}}">Biografia</a>
             <a class="btn btn-primary m-3" href="{{url_for('add_image')}}">Fotos</a>
@@ -34,52 +39,87 @@
             <a class="btn btn-primary m-3" href="{{url_for('add_sociales')}}">Redes sociales</a>
             <a class="btn btn-primary m-3" href="{{url_for('add_tour')}}">Tour</a>
             <a class="btn btn-primary m-3" href="{{url_for('add_genero')}}">Genero musical</a>
+            <a class="btn btn-outline-light m-2" href="{{url_for('artistas_registrados')}}">Buscar artistas</a> 
             
         </div>
         <h3>Agrega el link de tus redes sociales</h3>
         <div class="row">
             <div class="col-md-12 col-xl-6 mt-5">
-    
+                {% if sociales == None %}
                 <form action="" method="post">
-                    <select class="custom-select custom-select-sm" name="red_social">
-                        <option selected>Selecciona una red social</option>
-                        <option value="Facebook">Facebook</option>
-                        <option value="Youtube">Youtube</option>
-                        <option value="Amazon_music">Amazon_music</option>
-                        <option value="Apple_music">Apple_music</option>
-                        <option value="Tidal">Tidal</option>
-                        <option value="Spotify">Spotify</option>
-                        <option value="Instagram">Instagram</option>
-                    </select>
-                    <div class="mt-3">
-                        <label for="link" class="form-label"></label>
-                        <input type="text" name="link" class="form-control" id="link" required placeholder="Link">
+                    <div class="mb-3">
+                            <label for="facebook" class="form-label"></label>
+                            <input type="text" name="facebook" class="form-control" id="facebook" aria-describedby="emailHelp" placeholder="Facebook" >
+                    </div>
+                    <div class="mb-3">
+                        <label for="youtube" class="form-label"></label>
+                        <input type="text"  name="youtube" class="form-control" id="youtube" aria-describedby="emailHelp" placeholder="Youtube" >
+                    </div>
+                    <div class="mb-3">
+                        <label for="amazon_music" class="form-label"></label>
+                        <input type="text" name="amazon_music" class="form-control" id="amazon_music" aria-describedby="emailHelp" placeholder="amazon_music">
+                    </div>
+                    <div class="mb-3">
+                        <label for="apple_music" class="form-label"></label>
+                        <input type="text" name="apple_music" class="form-control" id="apple_music" aria-describedby="emailHelp" placeholder="apple_music">
+                    </div>
+                    <div class="mb-3">
+                        <label for="tidal" class="form-label"></label>
+                        <input type="text" name="tidal" class="form-control" id="tidal" aria-describedby="emailHelp" placeholder="Tidal">
+                    </div>
+                    <div class="mb-3">
+                        <label for="spotify" class="form-label"></label>
+                        <input type="text" name="spotify" class="form-control" id="spotify" aria-describedby="emailHelp" placeholder="Spotify">
+                    </div>
+                    <div class="mb-3">
+                        <label for="instagram" class="form-label"></label>
+                        <input type="text" name="instagram" class="form-control" id="instagram" aria-describedby="emailHelp"  placeholder="Instagram">
                     </div>
                     <div class="text-center">
                         <button type="submit" class="btn btn-info mt-3 btn-block">Agregar</button>
-                    </div>
+                    </div> 
                 </form>
+                {%else%}
+                {%for social in sociales%}
+                <form action="" method="post">
+                    <div class="mb-3">
+                        <label for="facebook" class="form-label"></label>
+                        <input type="text" value="{{ social.facebook }}" name="facebook" class="form-control" id="facebook" aria-describedby="emailHelp" placeholder="Facebook" >
+                </div>
+                <div class="mb-3">
+                    <label for="youtube" class="form-label"></label>
+                    <input type="text" value="{{ social.youtube }}"  name="youtube" class="form-control" id="youtube" aria-describedby="emailHelp" placeholder="Youtube" >
+                </div>
+                <div class="mb-3">
+                    <label for="amazon_music" class="form-label"></label>
+                    <input type="text" value="{{ social.amazon_music }}" name="amazon_music" class="form-control" id="amazon_music" aria-describedby="emailHelp" placeholder="amazon_music">
+                </div>
+                <div class="mb-3">
+                    <label for="apple_music" class="form-label"></label>
+                    <input type="text" value="{{ social.apple_music }}" name="apple_music" class="form-control" id="apple_music" aria-describedby="emailHelp" placeholder="apple_music">
+                </div>
+                <div class="mb-3">
+                    <label for="tidal" class="form-label"></label>
+                    <input type="text" name="tidal" class="form-control" id="tidal" aria-describedby="emailHelp" placeholder="Tidal">
+                </div>
+                <div class="mb-3">
+                    <label for="spotify" class="form-label"></label>
+                    <input type="text" value="{{ social.spotify }}" name="spotify" class="form-control" id="spotify" aria-describedby="emailHelp"  placeholder="Spotify">
+                </div>
+                <div class="mb-3">
+                    <label for="instagram" class="form-label"></label>
+                    <input type="text" value="{{ social.instagram }}"  name="instagram" class="form-control" id="instagram" aria-describedby="emailHelp" placeholder="Instagram">
+                </div>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-info mt-3 btn-block">Agregar</button>
+                </div> 
+                </form>
+
+                
+                {% endfor %}
+                {% endif %}
             </div>
-            <div class="col-md-12 col-xl-6 mt-5">
-                {% if sociales ==  None %}
-                <p>Sin Redes</p>
-            {% else %}
-            <table class="table table-borderless">
-                <thead>
-                    <tr>
-                        <th scope="col">Redes</th>
-                    </tr>
-                </thead>
-                    <tbody>
-                        {% for social in sociales%}
-                        <tr>
-                            <th>{{social.link}}</th>
-                            <th><a href="{{url_for('destroy_redes', id=social.social_band_id)}}">Eliminar</a></th>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            {% endif%}
+           
             </div>
         </div>
     </div>
